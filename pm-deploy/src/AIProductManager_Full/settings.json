@@ -1,0 +1,143 @@
+[
+    {
+        "id": "asst_q42HqisHBGJrZo5YqJCvlAAu",
+        "created_at": 1745224954,
+        "description": "Chief Executive Officer agent. Oversees product direction and coordinates with AIProductManager.",
+        "instructions": "You are the CEO. Your job is to set strategic direction and ask the AI Product Manager agent to execute product plans, feature prioritization, and market adaptation.",
+        "metadata": {},
+        "model": "gpt-4o-2024-08-06",
+        "name": "CEO",
+        "object": "assistant",
+        "tools": [
+            {
+                "function": {
+                    "name": "SendMessage",
+                    "description": "Correctly extracted `SendMessage` with all the required parameters with correct types",
+                    "parameters": {
+                        "$defs": {
+                            "recipient": {
+                                "enum": [
+                                    "AIProductManager"
+                                ],
+                                "title": "recipient",
+                                "type": "string"
+                            }
+                        },
+                        "properties": {
+                            "recipient": {
+                                "$ref": "#/$defs/recipient",
+                                "description": "AIProductManager: A 5000 IQ AI Product Manager who makes expert decisions using SQLite-backed insights.\n"
+                            },
+                            "my_primary_instructions": {
+                                "description": "Please repeat your primary instructions step-by-step, including both completed and the following next steps that you need to perform. For multi-step, complex tasks, first break them down into smaller steps yourself. Then, issue each step individually to the recipient agent via the message parameter. Each identified step should be sent in a separate message. Keep in mind that the recipient agent does not have access to these instructions. You must include recipient agent-specific instructions in the message or in the additional_instructions parameters.",
+                                "title": "My Primary Instructions",
+                                "type": "string"
+                            },
+                            "message": {
+                                "description": "Specify the task required for the recipient agent to complete. Focus on clarifying what the task entails, rather than providing exact instructions. Make sure to inlcude all the relevant information from the conversation needed to complete the task.",
+                                "title": "Message",
+                                "type": "string"
+                            },
+                            "message_files": {
+                                "anyOf": [
+                                    {
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "type": "array"
+                                    },
+                                    {
+                                        "type": "null"
+                                    }
+                                ],
+                                "default": null,
+                                "description": "A list of file IDs to be sent as attachments to this message. Only use this if you have the file ID that starts with 'file-'.",
+                                "examples": [
+                                    "file-1234",
+                                    "file-5678"
+                                ],
+                                "title": "Message Files"
+                            },
+                            "additional_instructions": {
+                                "anyOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "null"
+                                    }
+                                ],
+                                "default": null,
+                                "description": "Additional context or instructions from the conversation needed by the recipient agent to complete the task.",
+                                "title": "Additional Instructions"
+                            }
+                        },
+                        "required": [
+                            "message",
+                            "my_primary_instructions",
+                            "recipient"
+                        ],
+                        "type": "object"
+                    },
+                    "strict": false
+                },
+                "type": "function"
+            }
+        ],
+        "response_format": "auto",
+        "temperature": 0.4,
+        "tool_resources": {
+            "code_interpreter": null,
+            "file_search": null
+        },
+        "top_p": 1.0,
+        "reasoning_effort": null
+    },
+    {
+        "id": "asst_y4ZgW7cmCmZkHr0zmTLFZM22",
+        "created_at": 1745224955,
+        "description": "A 5000 IQ AI Product Manager who makes expert decisions using SQLite-backed insights.",
+        "instructions": "\n# \ud83e\udd16 AI Product Manager \u2013 Supreme Intelligence Protocol (SIP v1.0)\n\nYou are AIProductManager, an elite product strategist. You analyze data from a structured SQLite DB and work alongside the CEO to drive execution, feature prioritization, and roadmap intelligence.\n",
+        "metadata": {},
+        "model": "gpt-4o-2024-08-06",
+        "name": "AIProductManager",
+        "object": "assistant",
+        "tools": [
+            {
+                "function": {
+                    "name": "ProductDatabaseTool",
+                    "description": "Correctly extracted `ProductDatabaseTool` with all the required parameters with correct types",
+                    "parameters": {
+                        "properties": {
+                            "query": {
+                                "description": "The SQL SELECT query to run.",
+                                "title": "Query",
+                                "type": "string"
+                            },
+                            "db_path": {
+                                "default": "db/product_manager.db",
+                                "description": "Path to the SQLite database.",
+                                "title": "Db Path",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "query"
+                        ],
+                        "type": "object"
+                    },
+                    "strict": false
+                },
+                "type": "function"
+            }
+        ],
+        "response_format": "auto",
+        "temperature": 0.3,
+        "tool_resources": {
+            "code_interpreter": null,
+            "file_search": null
+        },
+        "top_p": 1.0,
+        "reasoning_effort": null
+    }
+]
